@@ -1,8 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Shop1Data from "../Shop1Data";
 
 const { kakao } = window;
 
 function Shop1() {
+  let [shoes] = useState(Shop1Data);
+
   useEffect(() => {
     let container = document.getElementById("map");
     let options = {
@@ -40,7 +46,7 @@ function Shop1() {
   }, []);
   return (
     <div style={{ display: "flex" }}>
-      <div style={{ width: "475px" }}>
+      <div style={{ width: "600px" }}>
         <a
           style={{
             marginLeft: "90px",
@@ -91,7 +97,7 @@ function Shop1() {
         <div
           id="map"
           style={{
-            height: "360px",
+            height: "300px",
             marginLeft: "90px",
             marginBottom: "20px",
             boxShadow: "inset 0px 4px 4px rgba(0, 0, 0, 0.25)",
@@ -124,8 +130,32 @@ function Shop1() {
         >
           전체
         </p>
+        <Container>
+          <Row style={{ gap: "50px" }}>
+            {shoes.map(function (a, i) {
+              return (
+                <ShopGoods key={shoes[i].id} i={i} shoes={shoes}></ShopGoods>
+              );
+            })}
+          </Row>
+        </Container>
       </div>
     </div>
+  );
+}
+
+function ShopGoods(props) {
+  return (
+    <Col md="5" style={{ textAlign: "center" }}>
+      <img
+        src={
+          "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"
+        }
+        width="100%"
+        height="80%"
+      ></img>
+      <h4>{props.shoes[props.i].title}</h4>
+    </Col>
   );
 }
 

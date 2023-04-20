@@ -6,6 +6,7 @@ import data from "../Data";
 import { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Goods1 from "../components/Goods1";
 
 function Category() {
   let [gender, setGender] = useState("");
@@ -78,6 +79,7 @@ function Category() {
         <Route path="/male" element={<Gender></Gender>} />
         <Route path="/both" element={<Gender></Gender>} />
         <Route path="/board" element={<div>폐점/할인점</div>} />
+        <Route path="/goods" element={<Goods1 />} />
       </Routes>
     </div>
   );
@@ -111,6 +113,7 @@ function Category() {
 }
 
 function Goods(props) {
+  let navigate = useNavigate();
   return (
     <Col md="4" style={{ textAlign: "center" }}>
       <img
@@ -118,6 +121,9 @@ function Goods(props) {
           "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"
         }
         width="60%"
+        onClick={() => {
+          navigate("/goods");
+        }}
       ></img>
       <h4>{props.shoes[props.i].title}</h4>
     </Col>
