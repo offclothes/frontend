@@ -7,6 +7,12 @@ import { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Goods1 from "../components/Goods1";
+import RegisterGoods from "../components/RegisterGoods";
+import ChangeGoods from "../components/ChangeGoods";
+import MyPage from "../components/MyPage";
+import RegisterBoard from "../components/RegisterBoard";
+import ChangeBoard from "../components/ChangeBoard";
+import Board from "../components/Board";
 
 function Category() {
   let [gender, setGender] = useState("");
@@ -75,11 +81,16 @@ function Category() {
       </Navbar>
 
       <Routes>
-        <Route path="/female" element={<Gender></Gender>} />
-        <Route path="/male" element={<Gender></Gender>} />
-        <Route path="/both" element={<Gender></Gender>} />
-        <Route path="/board" element={<div>폐점/할인점</div>} />
+        <Route path="/female" element={<Gender />} />
+        <Route path="/male" element={<Gender />} />
+        <Route path="/both" element={<Gender />} />
+        <Route path="/board" element={<Board />} />
         <Route path="/goods" element={<Goods1 />} />
+        <Route path="/registerGoods" element={<RegisterGoods />} />
+        <Route path="/changeGoods" element={<ChangeGoods />} />
+        <Route path="/myPage" element={<MyPage />} />
+        <Route path="/registerBoard" element={<RegisterBoard />} />
+        <Route path="/changeBoard" element={<ChangeBoard />} />
       </Routes>
     </div>
   );

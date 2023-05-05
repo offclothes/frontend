@@ -3,6 +3,8 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Shop1Data from "../Shop1Data";
+import { useNavigate } from "react-router-dom";
+import "../css/shop1.css";
 
 const { kakao } = window;
 
@@ -131,7 +133,7 @@ function Shop1() {
           전체
         </p>
         <Container>
-          <Row style={{ gap: "50px" }}>
+          <Row className="shop1Container">
             {shoes.map(function (a, i) {
               return (
                 <ShopGoods key={shoes[i].id} i={i} shoes={shoes}></ShopGoods>
@@ -145,16 +147,29 @@ function Shop1() {
 }
 
 function ShopGoods(props) {
+  let navigate = useNavigate();
   return (
-    <Col md="5" style={{ textAlign: "center" }}>
+    <Col md="5" style={{ textAlign: "start" }}>
       <img
         src={
           "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"
         }
-        width="100%"
-        height="80%"
+        width="80%"
+        height="60%"
       ></img>
       <h4>{props.shoes[props.i].title}</h4>
+      <h5>100,000원</h5>
+      <div className="shop1Button">
+        <button
+          className="registerShopBtn"
+          onClick={() => {
+            navigate("/changeGoods");
+          }}
+        >
+          수정
+        </button>
+        <button className="cancelShopBtn">삭제</button>
+      </div>
     </Col>
   );
 }

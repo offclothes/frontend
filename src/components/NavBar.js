@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Category from "./Category";
 import Shop1 from "../components/Shop1";
 import MainImage from "../assets/image/clothes.jpg";
+import "../css/navBar.css";
 
 const { kakao } = window;
 
@@ -43,6 +44,12 @@ function NavBar() {
               <Button variant="outline-success">Search</Button>
             </Form>
           </Navbar.Collapse>
+          <div
+            className="myPageButton"
+            onClick={() => {
+              navigate("/myPage");
+            }}
+          ></div>
         </Container>
       </Navbar>
       <Category></Category>

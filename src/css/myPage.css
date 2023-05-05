@@ -1,0 +1,72 @@
+.myPageMain {
+    box-sizing: border-box;
+    width: 800px;
+    height: 100%;
+    border: 2px solid #BCBCBC;
+    margin: 20px auto;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 20px;
+}
+
+.myPageTitle {
+    font-size: 35px;
+    line-height: 61px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #A8DBA8;
+    margin-bottom: 20px;
+}
+
+.myPageTop {
+    width: 100%;
+    font-size: 20px;
+    line-height: 44px;
+    display: flex;
+    align-items: center;
+    color: #194819;
+    margin-bottom: -15px;
+}
+
+.myPageEssential {
+    width: 250px;
+    padding-left: 1em;
+    padding-bottom: 1em;
+    font-weight: 600;
+    font-size: 15px;
+    color: #145914;
+}
+
+.myPageSelection {
+    width: 250px;
+    padding-left: 1em;
+    padding-bottom: 1em;
+    font-weight: 600;
+    font-size: 15px;
+    color: #145914;
+}
+
+.myPageList {
+    width: 150px;
+    padding-left: 3em;
+}
+
+.myPageInput {
+    width: 250px;
+    height: 40px;
+    margin-left: 4em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    background: rgba(230, 230, 230, 0.35);
+    border: 1px solid #000000;
+    border-radius: 5px;
+    color: #7E7E7E;
+}
+
+.myPageRadio {
+    margin-left: 70px;
+    background: #FFFFFF;
+
+}

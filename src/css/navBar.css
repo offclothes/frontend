@@ -1,0 +1,11 @@
+.myPageButton {
+    width: 42px;
+    height: 47px;
+    margin-right: 20px;
+    background-image: url('../assets/image/Group.png');
+    
+}
+
+.myPageButton:hover {
+    cursor: pointer;
+}
