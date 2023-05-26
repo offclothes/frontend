@@ -1,6 +1,9 @@
 import "../css/changeGoods.css";
+import { useState } from "react";
 
 function ChangeGoods() {
+  let [goodsName, setGoodsName] = useState("가디건");
+  let [goodsPrice, setGoodsPrice] = useState("100000");
   return (
     <div className="changeGoodsMain">
       <table width="100%">
@@ -14,7 +17,12 @@ function ChangeGoods() {
           <td>
             <th className="changeGoodsList">상품 이름</th>
             <th>
-              <input className="changeGoodsInput"></input>
+              <input
+                className="changeGoodsInput"
+                onChange={(e) => {
+                  setGoodsName(e.target.value);
+                }}
+              ></input>
             </th>
           </td>
         </tr>
@@ -57,13 +65,26 @@ function ChangeGoods() {
           <td>
             <th className="changeGoodsList">가격</th>
             <th>
-              <input className="changeGoodsInput"></input>
+              <input
+                className="changeGoodsInput"
+                onChange={(e) => {
+                  setGoodsPrice(e.target.value);
+                }}
+              ></input>
             </th>
           </td>
         </tr>
         <tr>
           <td className="ChangeGoodsButton">
-            <button className="changeGoodsRegisterButton">수정</button>
+            <button
+              className="changeGoodsRegisterButton"
+              onClick={() => {
+                //axios로 서버에 값 보내기
+                console.log([goodsName, goodsPrice]);
+              }}
+            >
+              수정
+            </button>
             <button className="changeGoodsCancelButton">취소</button>
           </td>
         </tr>

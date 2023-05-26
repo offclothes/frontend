@@ -1,6 +1,9 @@
+import { useState } from "react";
 import "../css/registerGoods.css";
 
 function RegisterGoods() {
+  let [name, setName] = useState("");
+  let [price, setPrice] = useState("");
   return (
     <div className="registerMain">
       <table width="100%">
@@ -14,7 +17,12 @@ function RegisterGoods() {
           <td>
             <th className="registerList">상품 이름</th>
             <th>
-              <input className="input"></input>
+              <input
+                className="input"
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              ></input>
             </th>
           </td>
         </tr>
@@ -57,13 +65,26 @@ function RegisterGoods() {
           <td>
             <th className="registerList">가격</th>
             <th>
-              <input className="input"></input>
+              <input
+                className="input"
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+              ></input>
             </th>
           </td>
         </tr>
         <tr>
           <td className="button">
-            <button className="registerButton">등록</button>
+            <button
+              className="registerButton"
+              onClick={() => {
+                //axios로 서버에 값 보내기
+                console.log(name, price);
+              }}
+            >
+              등록
+            </button>
             <button className="cancelButton">취소</button>
           </td>
         </tr>

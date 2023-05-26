@@ -1,7 +1,7 @@
 .boardMain {
     box-sizing: border-box;
     width: 80%;
-    margin: 0px auto;
+    margin-left: 10%;
 }
 
 .boardTop {
@@ -32,9 +32,40 @@
     background-color: white;
 }
 
+.boardMyButton{
+    width: 200px;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 20px;
+    border: 0px;
+    background-color: white;
+}
+
+.boardRegister {
+    width: 70%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.boardRegisterButton {
+    width: 100px;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 20px;
+    border: 0px;
+    background-color: #E8F3DA;
+    border: 1px solid #789B78;
+    color: #304F30;
+    border-radius: 7px;
+    font-size: 18px;
+}
+
 .boardList {
     display: flex;
     margin-bottom: 50px;
+    justify-content: center;
 }
 
 .boardImage {
@@ -43,7 +74,6 @@
 }
 
 .boardDetail {
-    margin-left: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,6 +81,10 @@
 
 .boardName {
     font-weight: 700;
+}
+
+.boardGoShop:hover {
+    cursor: pointer;
 }
 
 .boardChangeButton {

@@ -1,14 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Shop1Data from "../Shop1Data";
-import { useNavigate } from "react-router-dom";
 import "../css/shop1.css";
 
 const { kakao } = window;
 
 function Shop1() {
+  let navigate = useNavigate();
   let [shoes] = useState(Shop1Data);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ function Shop1() {
       '            <div class="desc">' +
       '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
       '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
-      '                <div><a href="http://localhost:3000/shop1" target="_blank" class="link">홈페이지</a></div>' +
+      '                <div><a href="http://localhost:3000/shop" target="_blank" class="link">홈페이지</a></div>' +
       "            </div>" +
       "        </div>" +
       "    </div>" +
@@ -119,21 +120,37 @@ function Shop1() {
         </p>
       </div>
       <div style={{ marginLeft: "100px" }}>
-        <p
+        <div
           style={{
             display: "flex",
-            height: "72px",
-            fontWeight: "800",
-            fontSize: "25px",
-            lineHeight: "39px",
-            marginTop: "30px",
-            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
-          전체
-        </p>
+          <p
+            style={{
+              display: "flex",
+              height: "72px",
+              fontWeight: "800",
+              fontSize: "25px",
+              lineHeight: "39px",
+              marginTop: "30px",
+              alignItems: "center",
+            }}
+          >
+            전체
+          </p>
+          <button
+            className="goodsRegisterButton"
+            onClick={() => {
+              navigate("/registerGoods");
+            }}
+          >
+            상품 등록하기
+          </button>
+        </div>
         <Container>
-          <Row className="shop1Container">
+          <Row className="container">
             {shoes.map(function (a, i) {
               return (
                 <ShopGoods key={shoes[i].id} i={i} shoes={shoes}></ShopGoods>
@@ -148,6 +165,7 @@ function Shop1() {
 
 function ShopGoods(props) {
   let navigate = useNavigate();
+  let [btn, setBtn] = useState("seller"); //setBtn에 서버에서 가져온 정보(판매자, 일반회원)를 btn에 넣어서 판매자면 버튼이 보이고 일반회원이면 버튼이 안보이도록
   return (
     <Col md="5" style={{ textAlign: "start" }}>
       <img
@@ -165,10 +183,16 @@ function ShopGoods(props) {
           onClick={() => {
             navigate("/changeGoods");
           }}
+          style={{ visibility: btn === "seller" ? "visible" : "hidden" }}
         >
           수정
         </button>
-        <button className="cancelShopBtn">삭제</button>
+        <button
+          style={{ visibility: btn === "seller" ? "visible" : "hidden" }}
+          className="cancelShopBtn"
+        >
+          삭제
+        </button>
       </div>
     </Col>
   );

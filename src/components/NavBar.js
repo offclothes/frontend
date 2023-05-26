@@ -3,8 +3,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import Category from "./Category";
+import { useEffect, useState } from "react";
+import Category from "../components/Category";
 import Shop1 from "../components/Shop1";
 import MainImage from "../assets/image/clothes.jpg";
 import "../css/navBar.css";
@@ -13,6 +13,7 @@ const { kakao } = window;
 
 function NavBar() {
   let navigate = useNavigate();
+  let [loginStatus, setLoginStatus] = useState("true");
   return (
     <div>
       <Navbar expand="lg">
@@ -44,19 +45,34 @@ function NavBar() {
               <Button variant="outline-success">Search</Button>
             </Form>
           </Navbar.Collapse>
-          <div
-            className="myPageButton"
-            onClick={() => {
-              navigate("/myPage");
-            }}
-          ></div>
+          {loginStatus === "true" ? (
+            <div className="logInOut">
+              <button className="logInOutButton">로그아웃</button>
+              <div
+                className="myPageButton"
+                onClick={() => {
+                  navigate("/myPage");
+                }}
+              ></div>
+            </div>
+          ) : (
+            <button
+              className="logInOutButton"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              로그인
+            </button>
+          )}
         </Container>
       </Navbar>
       <Category></Category>
 
       <Routes>
         <Route path="/" element={<Main></Main>} />
-        <Route path="/shop1" element={<Shop1 />} />
+        <Route path="/shop" element={<Shop1 />} />
+        {/* /shop/shopid값추가 */}
       </Routes>
     </div>
   );
@@ -87,12 +103,12 @@ function Main() {
       "        </div>" +
       '        <div class="body">' +
       '            <div class="img">' +
-      '                <img src="../assets/image/clothes.jpg" width="73" height="70">' +
+      '                <img src="/logo192.png" width="73" height="70">' +
       "           </div>" +
       '            <div class="desc">' +
       '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
       '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
-      '                <div><a href="http://localhost:3000/shop1" target="_blank" class="link">홈페이지</a></div>' +
+      '                <div><a href="http://localhost:3000/shop" target="_blank" class="link">홈페이지</a></div>' +
       "            </div>" +
       "        </div>" +
       "    </div>" +

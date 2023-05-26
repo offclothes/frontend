@@ -38,7 +38,7 @@ function Category() {
             }}
             onClick={() => {
               setGender("여성");
-              navigate("/female");
+              navigate("/category/female");
             }}
           >
             여성
@@ -51,7 +51,7 @@ function Category() {
             }}
             onClick={() => {
               setGender("남성");
-              navigate("/male");
+              navigate("/category/male");
             }}
           >
             남성
@@ -64,7 +64,7 @@ function Category() {
             }}
             onClick={() => {
               setGender("공용");
-              navigate("/both");
+              navigate("/category/both");
             }}
           >
             공용
@@ -72,7 +72,7 @@ function Category() {
           <Nav.Link
             style={{ color: "#304F30", fontWeight: "600" }}
             onClick={() => {
-              navigate("/board");
+              navigate("/eventAll");
             }}
           >
             폐점/할인점
@@ -81,11 +81,13 @@ function Category() {
       </Navbar>
 
       <Routes>
-        <Route path="/female" element={<Gender />} />
-        <Route path="/male" element={<Gender />} />
-        <Route path="/both" element={<Gender />} />
-        <Route path="/board" element={<Board />} />
-        <Route path="/goods" element={<Goods1 />} />
+        <Route path="/category">
+          <Route path="female" element={<Gender />} />
+          <Route path="male" element={<Gender />} />
+          <Route path="both" element={<Gender />} />
+        </Route>
+        <Route path="/eventAll" element={<Board />} />
+        <Route path="/shop/item" element={<Goods1 />} />
         <Route path="/registerGoods" element={<RegisterGoods />} />
         <Route path="/changeGoods" element={<ChangeGoods />} />
         <Route path="/myPage" element={<MyPage />} />
@@ -112,7 +114,7 @@ function Category() {
           {gender} | ALL
         </p>
         <Container>
-          <Row>
+          <Row style={{ rowGap: "50px" }}>
             {shoes.map(function (a, i) {
               return <Goods key={shoes[i].id} i={i} shoes={shoes}></Goods>;
             })}
@@ -128,12 +130,13 @@ function Goods(props) {
   return (
     <Col md="4" style={{ textAlign: "center" }}>
       <img
+        style={{ cursor: "pointer" }}
         src={
           "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"
         }
         width="60%"
         onClick={() => {
-          navigate("/goods");
+          navigate("/shop/item/"); //아이템id추가
         }}
       ></img>
       <h4>{props.shoes[props.i].title}</h4>

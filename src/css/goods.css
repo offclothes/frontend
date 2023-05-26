@@ -1,11 +1,9 @@
 .GoodsMain {
     box-sizing: border-box;
-    position: absolute;
     width: 1200px;
     height: 600px;
     border: 2px solid #BCBCBC;
-    margin-left: 180px;
-    margin-top: 20px;
+    margin: 20px auto;
     padding-left: 40px;
     padding-right: 40px;
 }

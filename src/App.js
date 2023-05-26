@@ -2,13 +2,21 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./components/NavBar";
 import React from "react";
+// import axios from "axios";
+// import { useEffect } from "react";
+import LogIn from "./components/LogIn";
+import { useLocation } from "react-router-dom";
 
 function App() {
-  return (
-    <div>
-      <NavBar></NavBar>
-    </div>
-  );
+  let location = useLocation();
+
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/test")
+  //     .then((res) => console.log(res))
+  //     .catch();
+  // });
+  return <div>{location.pathname === "/login" ? <LogIn /> : <NavBar />}</div>;
 }
 
 export default App;
