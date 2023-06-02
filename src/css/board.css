@@ -33,7 +33,7 @@
 }
 
 .boardMyButton{
-    width: 200px;
+    width: 250px;
     height: 40px;
     margin-top: 20px;
     margin-left: 20px;
@@ -64,8 +64,7 @@
 
 .boardList {
     display: flex;
-    margin-bottom: 50px;
-    justify-content: center;
+    margin: 0 0 40px 80px;
 }
 
 .boardImage {
@@ -77,9 +76,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
 }
 
 .boardName {
+    font-size: 20px;
     font-weight: 700;
 }
 

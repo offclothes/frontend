@@ -8,12 +8,20 @@ import Category from "../components/Category";
 import Shop1 from "../components/Shop1";
 import MainImage from "../assets/image/clothes.jpg";
 import "../css/navBar.css";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLogOutStatus } from "./store";
+import axios from "axios";
+import { increase } from "./store";
 
 const { kakao } = window;
 
 function NavBar() {
   let navigate = useNavigate();
-  let [loginStatus, setLoginStatus] = useState("true");
+  let loginStatus = useSelector((state) => {
+    return state;
+  });
+  let dispatch = useDispatch();
+
   return (
     <div>
       <Navbar expand="lg">
@@ -45,13 +53,24 @@ function NavBar() {
               <Button variant="outline-success">Search</Button>
             </Form>
           </Navbar.Collapse>
-          {loginStatus === "true" ? (
+          {loginStatus.loginStatus === "true" ? (
             <div className="logInOut">
-              <button className="logInOutButton">로그아웃</button>
+              <div></div>
+              <button
+                className="logInOutButton"
+                onClick={() => {
+                  dispatch(changeLogOutStatus());
+                  navigate("/");
+                }}
+              >
+                로그아웃
+              </button>
               <div
                 className="myPageButton"
                 onClick={() => {
                   navigate("/myPage");
+                  // axios.get("/{id}", {}).then((res) => console.log(res));
+                  dispatch(increase());
                 }}
               ></div>
             </div>
@@ -71,7 +90,7 @@ function NavBar() {
 
       <Routes>
         <Route path="/" element={<Main></Main>} />
-        <Route path="/shop" element={<Shop1 />} />
+        <Route path="/shop/" element={<Shop1 />} />
         {/* /shop/shopid값추가 */}
       </Routes>
     </div>
@@ -82,12 +101,12 @@ function Main() {
   useEffect(() => {
     let container = document.getElementById("map");
     let options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(37.5004, 127.028),
       level: 3,
     };
     let map = new kakao.maps.Map(container, options);
 
-    let markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+    let markerPosition = new kakao.maps.LatLng(37.5004, 127.028);
     let marker = new kakao.maps.Marker({
       position: markerPosition,
     });
@@ -98,7 +117,7 @@ function Main() {
       '<div class="wrap">' +
       '    <div class="info">' +
       '        <div class="title">' +
-      "            카카오 스페이스닷원" +
+      "            테스트 온" +
       '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
       "        </div>" +
       '        <div class="body">' +
@@ -106,8 +125,8 @@ function Main() {
       '                <img src="/logo192.png" width="73" height="70">' +
       "           </div>" +
       '            <div class="desc">' +
-      '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
-      '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
+      '                <div class="ellipsis">서울특별시 강남구 역삼동 817-31</div>' +
+      '                <div class="jibun ellipsis">(우) 06129 (우편) 서울특별시 강남구 강남대로98길 12-5</div>' +
       '                <div><a href="http://localhost:3000/shop" target="_blank" class="link">홈페이지</a></div>' +
       "            </div>" +
       "        </div>" +

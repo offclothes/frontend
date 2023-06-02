@@ -1,11 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import "../css/logIn.css";
 import { useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLoginStatus } from "./store";
 
 function LogIn() {
   let navigate = useNavigate();
   let [loginId, setLoginId] = useState("");
   let [loginPw, setLoginPw] = useState("");
+  let dispatch = useDispatch();
+  let loginStatus = useSelector((state) => {
+    return state;
+  });
 
   return (
     <div className="loginMain">
@@ -30,8 +37,37 @@ function LogIn() {
           }}
         ></input>
         <div className="loginButtonMain">
-          <button className="loginButton">로그인</button>
-          <button className="signUpButton">회원가입</button>
+          <button
+            className="loginButton"
+            onClick={() => {
+              {
+                axios
+                  .post("/Member/login", {
+                    id: loginId,
+                    pwd: loginPw,
+                  })
+                  .then((res) => alert(res.data.message))
+                  .then(() => navigate("/"))
+                  .then(() => {
+                    dispatch(changeLoginStatus());
+                  })
+                  .catch(function (err) {
+                    console.log("실패");
+                    console.log(err);
+                  });
+              }
+            }}
+          >
+            로그인
+          </button>
+          <button
+            className="signUpButton"
+            onClick={() => {
+              navigate("/registerGoods");
+            }}
+          >
+            회원가입
+          </button>
         </div>
       </div>
     </div>

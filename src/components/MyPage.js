@@ -1,6 +1,61 @@
 import "../css/myPage.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function MyPage() {
+  let [myData, setMyData] = useState([]);
+  let [nickName, setNickName] = useState("");
+  let [phone, setPhone] = useState("");
+  let [postCode, setPostCode] = useState("");
+  let [address1, setAddress1] = useState("");
+  let [address2, setAddress2] = useState("");
+  let [height, setHeight] = useState("");
+  let [weight, setWeight] = useState("");
+  let [gender, setGender] = useState("");
+
+  // let count = useSelector((state) => {
+  //   return state.count;
+  // });
+
+  function saveInformationButton() {
+    axios
+      .patch("/Member/myPage", {
+        nickname: nickName === undefined ? myData[0].nickname : nickName,
+        phoneNm: phone === undefined ? myData[0]?.phoneNm : phone,
+        postcode: myData[0]?.address.postcode,
+        address1: myData[0]?.address.address1,
+        address2:
+          address2 === undefined ? myData[0]?.address.address2 : address2,
+        length: height === undefined ? myData[0]?.length : height,
+        weight: weight === undefined ? myData[0]?.weight : weight,
+        gender: myData[0]?.gender,
+      })
+      .then((res) => {
+        alert(res.data.message);
+        console.log(nickName, phone, address2);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    axios
+      .get("/Member/myPage")
+      .then((res) => {
+        setMyData([...myData, res.data]);
+        setNickName(myData[0]?.nickname);
+        setPhone(myData[0]?.phoneNm);
+        setPostCode(myData[0]?.address.postcode);
+        setAddress1(myData[0]?.address.address1);
+        setAddress2(myData[0]?.address.address2);
+        setHeight(myData[0]?.length);
+        setWeight(myData[0]?.weight);
+        setGender(myData[0]?.gender);
+      })
+      .catch((err) => alert(err));
+  }, []);
+
   return (
     <div className="myPageMain">
       <table width="100%">
@@ -18,23 +73,11 @@ function MyPage() {
         </tr>
         <tr>
           <td>
-            <th className="myPageList">이름</th>
-            <td>
-              <input
-                className="myPageInput"
-                placeholder=" 이름을 입력해 주세요."
-              ></input>
-            </td>
-          </td>
-        </tr>
-        <tr>
-          <td>
             <th className="myPageList">아이디</th>
             <td>
-              <input
-                className="myPageInput"
-                placeholder=" 아이디를 입력해 주세요."
-              ></input>
+              <p className="myPageInput" disabled="true">
+                {myData[0]?.memberId}
+              </p>
             </td>
           </td>
         </tr>
@@ -44,7 +87,59 @@ function MyPage() {
             <td>
               <input
                 className="myPageInput"
-                placeholder=" 닉네임을 입력해 주세요."
+                placeholder={myData[0]?.nickname}
+                onChange={(e) => {
+                  setNickName(e.target.value);
+                }}
+              ></input>
+            </td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <th className="myPageList">전화번호</th>
+            <td>
+              <input
+                className="myPageInput"
+                placeholder={myData[0]?.phoneNm}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
+              ></input>
+            </td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <th className="myPageList">주소</th>
+            <td>
+              <p className="myPageAddressInput">
+                {myData[0]?.address.postcode}
+              </p>
+            </td>
+            <td>
+              <button className="myPagePostCodeButton">우편번호 찾기</button>
+            </td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <th className="myPageList"></th>
+            <td>
+              <p className="myPageAddress">{myData[0]?.address.address1}</p>
+            </td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <th className="myPageList"></th>
+            <td>
+              <input
+                className="myPageAddress"
+                placeholder={myData[0]?.address.address2}
+                onChange={(e) => {
+                  setAddress2(e.target.value);
+                }}
               ></input>
             </td>
           </td>
@@ -57,52 +152,48 @@ function MyPage() {
         </tr>
         <tr>
           <td>
-            <th className="myPageList">나이</th>
-            <td>
-              <input
-                className="myPageInput"
-                placeholder=" 나이를 입력해 주세요."
-              ></input>
-            </td>
-          </td>
-        </tr>
-        <tr>
-          <td>
             <th className="myPageList">성별</th>
             <td>
-              <input
-                className="myPageRadio"
-                type="radio"
-                id="myPageFemale"
-                name="gender"
-                value="myPageFemale"
-              />
-              <label for="">여성</label>
-              <input
-                className="myPageRadio"
-                type="radio"
-                id="myPageMale"
-                name="gender"
-                value="myPageMale"
-              />
-              <label for="">남성</label>
+              <p className="myPageInput">{myData[0]?.gender}</p>
             </td>
           </td>
         </tr>
         <tr>
-          <td>
+          <tr>
             <th className="myPageList">키</th>
             <td>
               <input
                 className="myPageInput"
-                placeholder=" 키를 입력해 주세요."
+                placeholder={myData[0]?.length}
+                onChange={(e) => {
+                  setHeight(e.target.value);
+                }}
               ></input>
             </td>
-          </td>
+          </tr>
+          <tr>
+            <th className="myPageList">몸무게</th>
+            <td>
+              <input
+                className="myPageInput"
+                placeholder={myData[0]?.weight}
+                onChange={(e) => {
+                  setWeight(e.target.value);
+                }}
+              ></input>
+            </td>
+          </tr>
         </tr>
         <tr>
           <td className="button">
-            <button className="registerButton">저장</button>
+            <button
+              className="registerButton"
+              onClick={() => {
+                saveInformationButton();
+              }}
+            >
+              저장
+            </button>
             <button className="cancelButton">취소</button>
           </td>
         </tr>

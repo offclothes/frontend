@@ -17,11 +17,11 @@ function ChangeBoard() {
         </tr>
         <tr>
           <td>
-            <th className="changeBoardList">매장 이름</th>
+            <th className="changeBoardList">제목</th>
             <th>
               <input
                 className="changeBoardInput"
-                placeholder="매장 이름을 입력해 주세요."
+                placeholder="제목을 입력해 주세요."
                 onChange={(e) => {
                   setName(e.target.value);
                 }}

@@ -13,6 +13,7 @@ import MyPage from "../components/MyPage";
 import RegisterBoard from "../components/RegisterBoard";
 import ChangeBoard from "../components/ChangeBoard";
 import Board from "../components/Board";
+import axios from "axios";
 
 function Category() {
   let [gender, setGender] = useState("");
@@ -75,7 +76,7 @@ function Category() {
               navigate("/eventAll");
             }}
           >
-            폐점/할인점
+            할인/폐점
           </Nav.Link>
         </Nav>
       </Navbar>
@@ -115,7 +116,7 @@ function Category() {
         </p>
         <Container>
           <Row style={{ rowGap: "50px" }}>
-            {shoes.map(function (a, i) {
+            {shoes.map((a, i) => {
               return <Goods key={shoes[i].id} i={i} shoes={shoes}></Goods>;
             })}
           </Row>
