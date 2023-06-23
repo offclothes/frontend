@@ -49,6 +49,16 @@
     border-radius: 5px;
 }
 
+.informationInput {
+    width: 20em;
+    height: 15em;
+    margin-left: 4em;
+    margin-bottom: 1em;
+    background: rgba(230, 230, 230, 0.35);
+    border: 0.5px solid #000000;
+    border-radius: 5px;
+}
+
 .imageUpload {
     width: 100px;
     height: 100px;

@@ -30,4 +30,18 @@
 .container {
     gap: 50px;
     justify-content: s;
-}   
+}
+
+.shopInformation {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1em;
+}
+
+.shopInformationBtn {
+    width: 80px;
+    margin-right: 1em;
+    background: #C9E79D;
+    border: 1px solid #000000;
+    border-radius: 7px;
+}

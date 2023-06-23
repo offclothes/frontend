@@ -3,9 +3,10 @@ import Navbar from "react-bootstrap/Navbar";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import data from "../Data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import "../css/category.css";
 import Goods1 from "../components/Goods1";
 import RegisterGoods from "../components/RegisterGoods";
 import ChangeGoods from "../components/ChangeGoods";
@@ -15,10 +16,22 @@ import ChangeBoard from "../components/ChangeBoard";
 import Board from "../components/Board";
 import axios from "axios";
 
-function Category() {
+function Category({ categoryBtn, setCategoryBtn }) {
   let [gender, setGender] = useState("");
   let navigate = useNavigate();
   let [shoes, setShoes] = useState(data);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("/map")
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
   return (
     <div>
       <Navbar
@@ -31,48 +44,43 @@ function Category() {
       >
         <Nav className="me-auto">
           <Nav.Link
-            style={{
-              paddingRight: "80px",
-              paddingLeft: "50px",
-              color: "#304F30",
-              fontWeight: "600",
-            }}
+            className={
+              categoryBtn === "여성" ? "genderFemaleClicked" : "genderFemale"
+            }
             onClick={() => {
               setGender("여성");
+              setCategoryBtn("여성");
               navigate("/category/female");
             }}
           >
             여성
           </Nav.Link>
           <Nav.Link
-            style={{
-              paddingRight: "80px",
-              color: "#304F30",
-              fontWeight: "600",
-            }}
+            className={categoryBtn === "남성" ? "genderClicked" : "genderMale"}
             onClick={() => {
               setGender("남성");
+              setCategoryBtn("남성");
               navigate("/category/male");
             }}
           >
             남성
           </Nav.Link>
           <Nav.Link
-            style={{
-              paddingRight: "80px",
-              color: "#304F30",
-              fontWeight: "600",
-            }}
+            className={categoryBtn === "공용" ? "genderClicked" : "genderBoth"}
             onClick={() => {
               setGender("공용");
+              setCategoryBtn("공용");
               navigate("/category/both");
             }}
           >
             공용
           </Nav.Link>
           <Nav.Link
-            style={{ color: "#304F30", fontWeight: "600" }}
+            className={
+              categoryBtn === "게시판" ? "genderClicked" : "genderBoth"
+            }
             onClick={() => {
+              setCategoryBtn("게시판");
               navigate("/eventAll");
             }}
           >
@@ -93,8 +101,38 @@ function Category() {
         <Route path="/changeGoods" element={<ChangeGoods />} />
         <Route path="/myPage" element={<MyPage />} />
         <Route path="/registerBoard" element={<RegisterBoard />} />
-        <Route path="/changeBoard" element={<ChangeBoard />} />
+        <Route path="/changeBoard/:eventId" element={<ChangeBoard />} />
       </Routes>
+      {/* <button
+        className="registerButton"
+        onClick={() => {
+          axios
+            .get("/myPost")
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }}
+      >
+        mypost
+      </button>
+      <button
+        className="registerButton"
+        onClick={() => {
+          axios
+            .get("/Member/myPage")
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }}
+      >
+        저장
+      </button> */}
     </div>
   );
 

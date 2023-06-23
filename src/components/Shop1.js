@@ -15,12 +15,12 @@ function Shop1() {
   useEffect(() => {
     let container = document.getElementById("map");
     let options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(37.5004, 127.028),
       level: 3,
     };
     let map = new kakao.maps.Map(container, options);
 
-    let markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+    let markerPosition = new kakao.maps.LatLng(37.5004, 127.028);
     let marker = new kakao.maps.Marker({
       position: markerPosition,
     });
@@ -31,7 +31,7 @@ function Shop1() {
       '<div class="wrap">' +
       '    <div class="info">' +
       '        <div class="title">' +
-      "            카카오 스페이스닷원" +
+      "            테스트 온" +
       '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
       "        </div>" +
       '        <div class="body">' +
@@ -39,8 +39,8 @@ function Shop1() {
       '                <img src="/logo192.png" width="73" height="70">' +
       "           </div>" +
       '            <div class="desc">' +
-      '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
-      '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
+      '                <div class="ellipsis">서울특별시 강남구 역삼동 817-31</div>' +
+      '                <div class="jibun ellipsis">(우) 06129 (우편) 서울특별시 강남구 강남대로98길 12-5</div>' +
       '                <div><a href="http://localhost:3000/shop" target="_blank" class="link">홈페이지</a></div>' +
       "            </div>" +
       "        </div>" +
@@ -50,7 +50,7 @@ function Shop1() {
   return (
     <div style={{ display: "flex" }}>
       <div style={{ width: "600px" }}>
-        <a
+        <p
           style={{
             marginLeft: "90px",
             color: "#194819",
@@ -65,7 +65,7 @@ function Shop1() {
           }}
         >
           MARITHÉ
-        </a>
+        </p>
         <div
           style={{
             height: "280px",
@@ -97,6 +97,9 @@ function Shop1() {
             엔지니어드진 등을 세계 최초로 개발하였습니다.
           </p>
         </div>
+        <div className="shopInformation">
+          <button className="shopInformationBtn">수정</button>
+        </div>
         <div
           id="map"
           style={{
@@ -116,7 +119,7 @@ function Shop1() {
             fontHeight: "29px",
           }}
         >
-          주소: 경기도 안양시 만안구 성결대학로
+          주소: 서울특별시 강남구 역삼동 817-31
         </p>
       </div>
       <div style={{ marginLeft: "100px" }}>

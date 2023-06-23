@@ -40,20 +40,6 @@ function RegisterBoard() {
         </tr>
         <tr>
           <td>
-            <th className="registerBoardList">주소</th>
-            <th>
-              <input
-                className="registerBoardInput"
-                placeholder="주소를 입력해 주세요."
-                onChange={(e) => {
-                  setShopAddress(e.target.value);
-                }}
-              ></input>
-            </th>
-          </td>
-        </tr>
-        <tr>
-          <td>
             <td className="RegisterBoardRadioButton">
               <input
                 onClick={() => {

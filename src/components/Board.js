@@ -1,7 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../css/board.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { changeLogOutStatus } from "./store";
+import { increase } from "./store";
+import { useSelector } from "react-redux";
 
 function Board() {
   let navigate = useNavigate();
@@ -10,6 +13,42 @@ function Board() {
   let [discountData, setDiscountData] = useState([]);
   let [closeData, setCloseData] = useState([]);
   let [myPost, setMyPost] = useState([]);
+  let [visible, setVisible] = useState(false);
+  let [clickedBtn, setClickedBtn] = useState("전체");
+
+  let loginStatus = useSelector((state) => {
+    return state;
+  });
+
+  useEffect(() => {
+    console.log(loginStatus.loginStatus);
+  }, [loginStatus.loginStatus]);
+
+  let myBoard = () => {
+    let error = () => {
+      navigate("/eventAll");
+      alert("판매자가 아닙니다.");
+    };
+    setClickedBtn("내 글");
+    setVisible(true);
+    axios.get("/eventAll").then((res) => {
+      res.data.seller === true ? (
+        <MyPostBoard
+          data={data}
+          setData={setData}
+          myPost={myPost}
+          visible={visible}
+        />
+      ) : (
+        error()
+      );
+    });
+  };
+
+  let goToLogin = () => {
+    alert("로그인을 해주세요.");
+    navigate("/login");
+  };
 
   useEffect(() => {
     axios.get("/eventAll").then((res) => {
@@ -23,8 +62,12 @@ function Board() {
     <div className="boardMain">
       <div className="boardTop">
         <button
-          className="boardDiscountButton"
+          className={
+            clickedBtn === "전체" ? "boardClicked" : "boardDiscountButton"
+          }
           onClick={() => {
+            setClickedBtn("전체");
+            setVisible(false);
             axios.get("/eventAll", { params: { state: "A" } }).then((res) => {
               let copy = [...allData];
               copy.push(...res.data.list);
@@ -33,7 +76,12 @@ function Board() {
                 <div>
                   {data.map(function (a, i) {
                     return (
-                      <BoardList key={data[i].eventId} i={i} data={data} />
+                      <BoardList
+                        visible={visible}
+                        key={data[i].eventId}
+                        i={i}
+                        data={data}
+                      />
                     );
                   })}
                 </div>
@@ -44,8 +92,12 @@ function Board() {
           전체
         </button>
         <button
-          className="boardDiscountButton"
+          className={
+            clickedBtn === "할인" ? "boardClicked" : "boardDiscountButton"
+          }
           onClick={() => {
+            setClickedBtn("할인");
+            setVisible(false);
             axios.get("/eventAll", { params: { state: "D" } }).then((res) => {
               let copy = [...discountData];
               copy.push(...res.data.list);
@@ -54,7 +106,12 @@ function Board() {
                 <div>
                   {data.map(function (a, i) {
                     return (
-                      <BoardList key={data[i].eventId} i={i} data={data} />
+                      <BoardList
+                        visible={visible}
+                        key={data[i].eventId}
+                        i={i}
+                        data={data}
+                      />
                     );
                   })}
                 </div>
@@ -65,11 +122,16 @@ function Board() {
           할인
         </button>
         <button
-          className="boardClosureButton"
+          className={
+            clickedBtn === "폐점" ? "boardClicked" : "boardClosureButton"
+          }
           onClick={() => {
+            setClickedBtn("폐점");
+            setVisible(false);
             axios
               .get("/eventAll", { params: { state: "C" } })
               .then((res) => {
+                console.log(res);
                 let copy = [...closeData];
                 copy.push(...res.data.list);
                 setData(copy);
@@ -77,7 +139,12 @@ function Board() {
                   <div>
                     {data.map(function (a, i) {
                       return (
-                        <BoardList key={data[i].eventId} i={i} data={data} />
+                        <BoardList
+                          visible={visible}
+                          key={data[i].eventId}
+                          i={i}
+                          data={data}
+                        />
                       );
                     })}
                   </div>
@@ -91,48 +158,10 @@ function Board() {
           폐점
         </button>
         <button
-          className="boardMyButton"
-          onClick={() => {
-            axios
-              .get("/myPost")
-              .then((res) => {
-                let copy = [...myPost];
-                copy.push(...res.data);
-                setData(copy);
-
-                return (
-                  <div>
-                    {data.map(function (a, i) {
-                      return (
-                        <div>
-                          <div>
-                            <MyBoardList
-                              key={data[i].eventId}
-                              i={i}
-                              data={data}
-                            />
-                          </div>
-                          <div className="boardButton">
-                            <button
-                              className="boardChangeButton"
-                              onClick={() => {
-                                navigate("/changeBoard");
-                              }}
-                            >
-                              수정
-                            </button>
-                            <button className="boardDeleteButton">삭제</button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }}
+          className={
+            clickedBtn === "내 글" ? "boardMyButtonClicked" : "boardMyButton"
+          }
+          onClick={loginStatus.loginStatus === true ? myBoard : goToLogin}
         >
           내가 작성한 글 보기
         </button>
@@ -149,27 +178,33 @@ function Board() {
       </div>
       <div>
         {data.map(function (a, i) {
-          return <BoardList key={data[i].eventId} i={i} data={data} />;
+          return (
+            <BoardList
+              visible={visible}
+              key={data[i].eventId}
+              i={i}
+              data={data}
+            />
+          );
         })}
       </div>
     </div>
   );
 }
 
-function BoardList(props) {
+function BoardList({ i, data, visible }) {
   let navigate = useNavigate();
+
   return (
     <div>
       <div className="boardList">
         <div className="boardDetail">
-          <p className="boardName">
-            {props.data[props.i].shoppingMal.shopName}
-          </p>
-          <p>제목 : {props.data[props.i].title}</p>
-          <p>주소 : {props.data[props.i].shoppingMal.address.address1}</p>
-          <p>내용 : {props.data[props.i].content}</p>
+          <p className="boardName">{data[i].shoppingMal.shopName}</p>
+          <p>제목 : {data[i].title}</p>
+          <p>주소 : {data[i].shoppingMal.address.address1}</p>
+          <p>내용 : {data[i].content}</p>
           <p>
-            기간 : {props.data[props.i].startDay} ~ {props.data[props.i].endDay}
+            기간 : {data[i].startDay} ~ {data[i].endDay}
           </p>
           <div
             className="boardGoShop"
@@ -183,54 +218,71 @@ function BoardList(props) {
         <div style={{ marginBottom: "10px" }}></div>
       </div>
       <div>
-        <div className="boardButton">
-          <button
-            className="boardChangeButton"
-            onClick={() => {
-              navigate("/changeBoard");
-            }}
-          >
-            수정
-          </button>
-          <button className="boardDeleteButton">삭제</button>
-        </div>
+        {visible && <MyBoardButton data={data} i={i} />}
         <hr />
       </div>
     </div>
   );
 }
 
-function MyBoardList(props) {
+function MyBoardButton({ data, i }) {
   let navigate = useNavigate();
+  let { eventId } = useParams();
+
+  const deleteBtn = () => {
+    axios.delete(`/myPost/${data[i].eventId}`).then(() => {
+      alert("삭제되었습니다.");
+    });
+  };
+
   return (
     <div>
-      <div className="boardList">
-        <div className="boardDetail">
-          <p className="boardName">
-            {props.data[props.i].shoppingMal.shopName}
-          </p>
-          <p>제목 : {props.data[props.i].title}</p>
-          <p>주소 : {props.data[props.i].shoppingMal.address.address1}</p>
-          <p>내용 : {props.data[props.i].content}</p>
-          <p>
-            기간 : {props.data[props.i].startDay} ~ {props.data[props.i].endDay}
-          </p>
-          <div
-            className="boardGoShop"
-            onClick={() => {
-              navigate("/shop");
-            }}
-          >
-            매장 페이지 이동하기
-          </div>
-        </div>
-        <div style={{ marginBottom: "10px" }}></div>
-      </div>
-      <div>
-        <hr />
+      <div className="boardButton">
+        <button
+          className="boardChangeButton"
+          onClick={() => {
+            navigate(`/changeBoard/${data[i].eventId}`);
+          }}
+        >
+          수정
+        </button>
+        <button className="boardDeleteButton" onClick={deleteBtn}>
+          삭제
+        </button>
       </div>
     </div>
   );
+}
+
+function MyPostBoard({ myPost, setData, visible, data }) {
+  useEffect(() => {
+    axios.get("/myPost").then((res) => {
+      let copy = [...myPost];
+      copy.push(...res.data);
+      setData(copy);
+    }, []);
+
+    return (
+      <div>
+        {data.map(function (a, i) {
+          return (
+            <div>
+              <div>
+                <BoardList
+                  visible={visible}
+                  key={data[i].eventId}
+                  i={i}
+                  data={data}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }).catch((err) => {
+    console.log(err);
+  });
 }
 
 export default Board;

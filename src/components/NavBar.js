@@ -1,3 +1,4 @@
+import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -10,13 +11,13 @@ import MainImage from "../assets/image/clothes.jpg";
 import "../css/navBar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLogOutStatus } from "./store";
-import axios from "axios";
 import { increase } from "./store";
 
 const { kakao } = window;
 
 function NavBar() {
   let navigate = useNavigate();
+  let [categoryBtn, setCategoryBtn] = useState("");
   let loginStatus = useSelector((state) => {
     return state;
   });
@@ -35,6 +36,7 @@ function NavBar() {
               fontSize: "25px",
             }}
             onClick={() => {
+              setCategoryBtn("");
               navigate("/");
             }}
           >
@@ -59,8 +61,17 @@ function NavBar() {
               <button
                 className="logInOutButton"
                 onClick={() => {
+                  axios
+                    .post("/Member/logout")
+                    .then((res) => {
+                      alert(res.data.message);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                   dispatch(changeLogOutStatus());
                   navigate("/");
+                  setCategoryBtn("");
                 }}
               >
                 로그아웃
@@ -78,6 +89,7 @@ function NavBar() {
             <button
               className="logInOutButton"
               onClick={() => {
+                setCategoryBtn("");
                 navigate("/login");
               }}
             >
@@ -86,7 +98,10 @@ function NavBar() {
           )}
         </Container>
       </Navbar>
-      <Category></Category>
+      <Category
+        categoryBtn={categoryBtn}
+        setCategoryBtn={setCategoryBtn}
+      ></Category>
 
       <Routes>
         <Route path="/" element={<Main></Main>} />

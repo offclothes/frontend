@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "../css/logIn.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLoginStatus } from "./store";
@@ -17,7 +17,14 @@ function LogIn() {
   return (
     <div className="loginMain">
       <div className="loginPage">
-        <div className="loginTitle">OffClothes</div>
+        <div
+          className="loginTitle"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          OffClothes
+        </div>
         <input
           type="text"
           className="idInput"
@@ -52,7 +59,7 @@ function LogIn() {
                     dispatch(changeLoginStatus());
                   })
                   .catch(function (err) {
-                    console.log("실패");
+                    alert("아이디 또는 비밀번호가 일치하지 않습니다.");
                     console.log(err);
                   });
               }

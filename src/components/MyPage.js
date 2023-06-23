@@ -1,6 +1,7 @@
 import "../css/myPage.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function MyPage() {
   let [myData, setMyData] = useState([]);
@@ -12,6 +13,8 @@ function MyPage() {
   let [height, setHeight] = useState("");
   let [weight, setWeight] = useState("");
   let [gender, setGender] = useState("");
+
+  let navigate = useNavigate();
 
   // let count = useSelector((state) => {
   //   return state.count;
@@ -53,7 +56,7 @@ function MyPage() {
         setWeight(myData[0]?.weight);
         setGender(myData[0]?.gender);
       })
-      .catch((err) => alert(err));
+      .catch((err) => alert("로그인을 해주세요."), navigate("/login"));
   }, []);
 
   return (

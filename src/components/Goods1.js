@@ -50,6 +50,9 @@ function Goods1() {
           </p>
           <p className="priceInformation">가격 정보</p>
           <p className="price">100,000원</p>
+          <div className="updateBtnSection">
+            <button className="updateBtn">수정</button>
+          </div>
         </div>
       </div>
     </div>
