@@ -20,10 +20,6 @@ function Board() {
     return state;
   });
 
-  useEffect(() => {
-    console.log(loginStatus.loginStatus);
-  }, [loginStatus.loginStatus]);
-
   let myBoard = () => {
     let error = () => {
       navigate("/eventAll");
@@ -161,7 +157,7 @@ function Board() {
           className={
             clickedBtn === "내 글" ? "boardMyButtonClicked" : "boardMyButton"
           }
-          onClick={loginStatus.loginStatus === true ? myBoard : goToLogin}
+          onClick={loginStatus.loginStatus === "true" ? myBoard : goToLogin}
         >
           내가 작성한 글 보기
         </button>

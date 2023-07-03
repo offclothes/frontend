@@ -56,7 +56,10 @@ function MyPage() {
         setWeight(myData[0]?.weight);
         setGender(myData[0]?.gender);
       })
-      .catch((err) => alert("로그인을 해주세요."), navigate("/login"));
+      .catch(() => {
+        alert("로그인을 해주세요.");
+        navigate("/login");
+      });
   }, []);
 
   return (
